@@ -2,7 +2,6 @@ import styles from './Board.module.css'
 import {SetActionStartMove,SetActionDoMove} from '../../redux/Board-reducer'
 import type { BoardPropsType } from './BoardContainer'
 import type {CheckerType,CeilType,AllowedCeilType} from '../../redux/Board-reducer'
-import type { ReactNode} from 'react';
 import {memo,useCallback} from 'react'
 interface PropsCeilComponentType {
     type:boolean, 
