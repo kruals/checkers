@@ -1,0 +1,117 @@
+.board{
+    width:750px;
+    height:750px;
+    background-color:black;
+    display:flex;
+    padding:20px;
+    border:1px solid black;
+}
+.field{
+    width:100%;
+    height:100%;
+    background-color:white;
+    display:flex;
+    flex-wrap:wrap;
+    border:1px solid black;
+
+}
+.row{
+    display:flex;
+    height:calc(100% / 8)px;
+    width:100%;
+}
+.ceil{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-grow: 1;
+}
+.whiteCeil{
+    background-color:#F0D9B5;   
+}
+
+.whieCeil .selected{
+    background-color:#F6D365;
+}
+.blackCeil{
+    background-color:#B58863;   
+}
+.checker{
+    width:60%;
+    height:60%;
+    border-radius:50%;
+    background-color:red;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    
+}
+.whiteChecker{
+    background-color:white;
+}
+.blackChecker{
+    background-color:black;
+}
+.inside{
+    width:80%;
+    height: 80%;
+    border-radius:50%;
+}
+.whiteCheckerInside{
+    box-shadow: 0px -4px 12px 0px rgba(34, 60, 80, 0.15) inset;
+}
+.blackCheckerInside{
+    box-shadow: 0px -4px 12px 0px rgba(117, 117, 118, 0.255) inset;
+}
+.divAlowedCeil{
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.alowedCeilTurn{
+    width:20%;
+    height:20%;
+    border-radius:50%;
+    background-color:rgb(41, 255, 41);
+}
+.alowedCeilCapture{
+    width:20%;
+    height:20%;
+    border-radius:50%;
+    background-color:rgb(255, 48, 37);
+}
+.selected{
+    background-color:#F6D365;
+}
+.king{
+    width:90%;
+    height:90%;
+    position:relative
+}
+.king img{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:85%;
+    height:85%;
+    color:yellow;
+}
+
+@media (max-width:769px){
+    .board{
+        width:500px;
+        height:500px;
+    }
+}
+
+@media (max-width:376px){
+    .board{
+        padding:5px;
+        width:300px;
+        height:300px;
+    }
+}
+
