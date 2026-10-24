@@ -106,6 +106,13 @@
         height:500px;
     }
 }
+@media (max-width:420px){
+  .board{
+        padding:5px;
+        width:380px;
+        height:380px;
+    }
+}
 
 @media (max-width:376px){
     .board{
