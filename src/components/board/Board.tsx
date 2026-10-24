@@ -1,5 +1,5 @@
 import styles from './Board.module.css'
-import {SetActionStartMove,SetActionDoMove} from '../../redux/Board-reducer'
+import {SetActionStartMove,SetActionDoMove,SetActionRestartGame} from '../../redux/Board-reducer'
 import type { BoardPropsType } from './BoardContainer'
 import type {CheckerType,CeilType,AllowedCeilType} from '../../redux/Board-reducer'
 import {memo,useCallback} from 'react'
@@ -17,6 +17,7 @@ interface PropsCeilComponentType {
 
 }
 const CeilComponent = memo((props : PropsCeilComponentType) =>{
+
         const colorCeil = props.type ? styles.whiteCeil : styles.blackCeil;
         const ceil = {
             type:props.type,
@@ -47,6 +48,7 @@ const CeilComponent = memo((props : PropsCeilComponentType) =>{
     })
 
 const Board = (props:BoardPropsType) => {
+    console.log(`Белые: ${props.couWhiteChecker}, Чёрные: ${props.couBlackChecker}`)
 
 
      const StartMove = useCallback((checker:CheckerType) =>{
@@ -75,6 +77,17 @@ const Board = (props:BoardPropsType) => {
         <div className={styles.field}>
             {field}
         </div>
+        {(props.couBlackChecker === 0 || props.couWhiteChecker === 0) 
+    ? <div className = {styles.win}>
+        <div className = {styles.winBlock}>
+            <h1>Игра закончена!!!!!</h1>
+            <h2>Победили : {props.couBlackChecker === 0 ? <b>Белые</b> : <b>Чёрные</b>}</h2>
+            <button onClick = {() => props.dispatch(SetActionRestartGame())}>
+                <b>Начать заново</b>
+            </button>
+        </div>
+    </div>
+    : null}
     </div>
 }
 

@@ -6,7 +6,9 @@ let mapStateToProps = ( state : StoreType ) => {
     return{
         field: state.BroadReducer.field,
         alowedCeils:state.BroadReducer.alowedCeils,
-        selectedCeil: state.BroadReducer.selectedCeil
+        selectedCeil: state.BroadReducer.selectedCeil,
+        couWhiteChecker : state.BroadReducer.CouWhiteChecker,
+        couBlackChecker : state.BroadReducer.CouBlackChecker
     }
 }
 let mapDispatchToProps = (dispatch : DispatchType) =>{

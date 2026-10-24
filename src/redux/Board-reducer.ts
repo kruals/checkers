@@ -1,11 +1,14 @@
 const START_MOVE = 'START-MOVE'
 const DO_MOVE = 'DO-MOVE'
+const RESTART_GAME= 'RESTART-GAME'
 type StartMoveAction = {type: 'START-MOVE',checker:CheckerType}
 type DoMoveAction = {type: 'DO-MOVE',ceil:CeilType}
+type RestartGameAction = {type:'RESTART-GAME'}
 export const SetActionStartMove  = (checker:CheckerType):StartMoveAction => ({type:START_MOVE, checker:checker})
 export const SetActionDoMove = (ceil:CeilType):DoMoveAction => ({type:DO_MOVE,ceil:ceil})
+export const SetActionRestartGame = (): RestartGameAction => ({type:RESTART_GAME})
 
-type BoardAction = | StartMoveAction | DoMoveAction
+type BoardAction = | StartMoveAction | DoMoveAction | RestartGameAction
 
 
 
@@ -37,7 +40,9 @@ export interface BoardStateType {
     field: FieldType,
     alowedCeils: AllowedCeilType[],
     selectedCeil : CheckerType | null,
-    turn:'white'|'black'
+    turn:'white'|'black',
+    CouWhiteChecker :number,
+    CouBlackChecker:number
 }
 
 
@@ -47,19 +52,25 @@ let initialState : BoardStateType ={
     field : [],
     alowedCeils : [],
     selectedCeil : null,
-    turn:'white'
+    turn:'white',
+    CouWhiteChecker:12,
+    CouBlackChecker:12,
 }
-let field : FieldType = []
-for (let i : number = 0; i < 8; i++) {
+
+const FieldInit = ( ) =>{
+    const field:FieldType = []
+    for (let i : number = 0; i < 8; i++) {
         let row :CeilType[] = []
         for(let j :number= 0; j < 8;j++){
             let type = ((i+j) % 2 == 0)
             if(!type){
                 if(i>= 0 && i <= 2){
-                    row.push({type:type,isBe:true,checker:{color:'black',x:j,y:i,isKing:false},x:j,y:i})        
+                    row.push({type:type,isBe:true,checker:{color:'black',x:j,y:i,isKing:false},x:j,y:i})
+                    
                 }
                 else if(i>= 5 && i <= 7){
-                    row.push({type:type,isBe:true,checker:{color:'white',x:j,y:i,isKing:false},x:j,y:i})      
+                    row.push({type:type,isBe:true,checker:{color:'white',x:j,y:i,isKing:false},x:j,y:i})  
+                       
                 }  
                 else{
                      row.push({type:type,isBe:false,x:j,y:i,checker:null})
@@ -70,8 +81,11 @@ for (let i : number = 0; i < 8; i++) {
             }
         }
         field.push(row)
-    }
-initialState.field = field
+    }    
+    return field
+}
+
+initialState.field = FieldInit()
 const CheckBoundaries = (x: number, y: number): boolean => {
     return x >= 0 && x < 8 && y >= 0 && y < 8;
 };
@@ -412,6 +426,12 @@ const BoardReducer = (
                 ceil.x === capturedX &&
                 ceil.y === capturedY
             ) {
+                if(ceil.checker?.color === 'white'){
+                    state.CouWhiteChecker = state.CouWhiteChecker - 1;
+                }
+                else{
+                    state.CouBlackChecker = state.CouBlackChecker - 1;
+                }
                 return {
                     ...ceil,
                     checker: null,
@@ -451,7 +471,14 @@ const BoardReducer = (
         turn: state.turn === 'white' ? 'black' : 'white',
     };
 }
-
+        case RESTART_GAME: {
+            return {
+                ...state,
+                field : FieldInit(),
+                CouBlackChecker:12,
+                CouWhiteChecker :12
+            }
+        }
         default:
             return state;
     }
